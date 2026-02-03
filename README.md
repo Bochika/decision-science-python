@@ -1,76 +1,120 @@
-# Decision-science-python
-Decision Science, data analysis, optimization and simulation in Python for real-world decision-making.
+# Análisis de la dinámica histórica de la Laguna de Fúquene usando Observación de la Tierra (EO)
 
-# 📊 Decision Science & Optimization with Python
+## 1. Contexto del problema
 
-This repository contains practical examples of Decision Science, data analysis, optimization, and simulation using Python.
-The focus is on solving real-world decision-making problems by combining mathematical modeling and data-driven analysis.
+La Laguna de Fúquene es uno de los cuerpos de agua continentales más importantes del altiplano cundiboyacense en Colombia. Su extensión, dinámica hidrológica y estado ecológico han cambiado de manera significativa en las últimas décadas debido a factores naturales y antrópicos, como la variabilidad climática, la regulación hidráulica y el uso del suelo.
 
-# 🔍 What you will find here
+El monitoreo continuo de este tipo de ecosistemas es complejo debido a la limitada disponibilidad de datos in situ consistentes a largo plazo. En este contexto, la Observación de la Tierra (Earth Observation, EO) ofrece una alternativa robusta para analizar cambios espaciales y temporales mediante imágenes satelitales históricas.
 
-Data analysis and visualization for decision support
+---
 
-Mathematical modeling applied to business and operational problems
+## 2. Pregunta de investigación
 
-Optimization models (allocation, cost minimization, efficiency improvement)
+**¿Cómo ha cambiado espacial y temporalmente el espejo de agua de la Laguna de Fúquene entre 1985 y 2024 utilizando datos de Observación de la Tierra?**
 
-Simulation techniques (scenario analysis, Monte Carlo simulations)
+El objetivo del proyecto no es estimar el área exacta del espejo de agua, sino identificar **tendencias, patrones espaciales y variabilidad temporal** a partir de una metodología consistente.
 
-# 🧠 Motivation
+---
 
-My background is in Applied Mathematics, and my goal is to translate complex problems into actionable insights using data, models, and clear communication.
-This repository showcases how mathematical thinking and Python can support better decisions in business and engineering contexts.
+## 3. Datos utilizados
 
-# 🛠️ Tools & Technologies
+### 3.1 Observación de la Tierra (EO)
 
-Python
+En este proyecto se emplean datos de Observación de la Tierra (EO), entendidos como información obtenida mediante sensores remotos que capturan características físicas de la superficie terrestre desde plataformas satelitales.
 
-pandas, numpy, matplotlib, scipy
+### 3.2 Satélites
 
-Basic optimization and simulation techniques
+Se utilizaron imágenes de la misión **Landsat**, debido a su cobertura temporal extensa y consistente:
 
-Jupyter Notebooks
+* Landsat 5 TM
+* Landsat 7 ETM+
+* Landsat 8 OLI
+* Landsat 9 OLI-2
 
-# 📁 Repository Structure
-This repository contains applied Decision Science examples implemented in Python, focused on real-world analytical problems.
+**Resolución espacial:** 30 m
+**Periodo de análisis:** 1985–2024
+**Plataforma:** Google Earth Engine (GEE)
 
-Notebooks
+Aunque sensores más recientes como Sentinel-2 ofrecen mayor resolución espacial, no fueron utilizados para el análisis histórico debido a su cobertura temporal limitada (post-2015).
 
-01_exploratory_analysis.ipynb
-Exploratory data analysis to understand patterns, distributions, and decision-relevant metrics.
+---
 
-02_optimization_allocation.ipynb
-Mathematical optimization model for resource allocation under constraints.
+## 4. Metodología
 
-03_monte_carlo_simulation.ipynb
-Monte Carlo simulation to assess uncertainty and risk in decision-making.
+### 4.1 Delimitación espacial
 
-Data
+Se definió un polígono de interés (ROI) fijo que representa el entorno de la laguna. Este polígono fue validado visualmente y se mantuvo constante durante todo el periodo de análisis para evitar sesgos derivados de cambios en la geometría.
 
-example_input_data.csv
-Sample dataset used to demonstrate modeling and simulation workflows.
+### 4.2 Detección del cuerpo de agua
 
-Source Code
+Para identificar el espejo de agua se utilizó el **Índice de Diferencia Normalizada de Agua (NDWI)**, calculado a partir de las bandas verde e infrarrojo cercano de Landsat.
 
-decision_models.py
-Reusable Python functions for optimization and simulation.
+Se aplicó un umbral constante para clasificar los píxeles como agua/no agua, priorizando la consistencia metodológica sobre la optimización puntual del índice.
 
+### 4.3 Resolución temporal y decisiones metodológicas
 
-# 🚀 Example Topics
+Inicialmente se exploró un análisis mensual y anual del área de la laguna. Sin embargo, el análisis mensual presentó múltiples limitaciones:
 
-Inventory and resource allocation optimization
+* Alta nubosidad en ciertos periodos
+* Ausencia de imágenes válidas en algunos meses
+* Resultados inconsistentes y numerosos valores faltantes
 
-Cost and efficiency analysis
+Como resultado, se tomó la decisión de:
 
-Scenario evaluation under uncertainty
+* Utilizar **series temporales anuales** para analizar tendencias generales
+* Generar **mapas espaciales cada 5 años** para evaluar visualmente los cambios en la extensión del espejo de agua
 
-Clear visualization for non-technical stakeholders
+Esta decisión permitió balancear detalle temporal, calidad de datos y confiabilidad de los resultados.
 
-# 📌 About Me
+---
 
-Luis Miguel Correa
-Decision Scientist / Data Analyst
-Mathematics · Optimization · Simulation · Applied Analytics
+## 5. Resultados
+
+Los principales hallazgos del análisis incluyen:
+
+* Presencia de una alta variabilidad interanual en la extensión del espejo de agua
+* Cambios espaciales evidentes en los bordes de la laguna al comparar mapas quinquenales
+* Diferencias entre los valores derivados de EO y cifras reportadas oficialmente, atribuibles a diferencias metodológicas y de resolución
+
+Los mapas generados cada 5 años permiten observar patrones espaciales consistentes que complementan el análisis temporal.
+
+---
+
+## 6. Discusión y limitaciones
+
+Este estudio presenta varias limitaciones importantes:
+
+* La resolución espacial de 30 m limita la detección de cambios pequeños en el borde del cuerpo de agua
+* La nubosidad afecta la disponibilidad y calidad de imágenes en ciertos periodos
+* El NDWI puede confundir áreas con vegetación acuática o suelos saturados
+* Los resultados no deben interpretarse como mediciones hidrológicas exactas
+
+No obstante, el enfoque es adecuado para analizar **tendencias y patrones a largo plazo**, que es el objetivo principal del proyecto.
+
+---
+
+## 7. Conclusiones
+
+* La Observación de la Tierra es una herramienta eficaz para el análisis histórico de cuerpos de agua
+* La consistencia metodológica es más importante que la maximización de resolución temporal
+* El análisis espacial complementa y valida las series temporales
+* EO permite apoyar, pero no reemplazar, mediciones oficiales e in situ
+
+---
+
+## 8. Trabajo futuro
+
+Posibles extensiones del proyecto incluyen:
+
+* Integrar datos de precipitación (por ejemplo, CHIRPS)
+* Incorporar sensores SAR (Sentinel-1) para reducir el efecto de la nubosidad
+* Ajustar umbrales dinámicos de NDWI
+* Comparar resultados con datos hidrológicos oficiales
+
+---
+
+Este proyecto demuestra la capacidad de tomar decisiones metodológicas informadas, resolver problemas con datos incompletos y extraer conclusiones significativas a partir de información de Observación de la Tierra.
+
 
 📧 Contact: bochicasimijaca@gmail.com
 
